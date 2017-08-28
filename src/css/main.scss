@@ -1,7 +1,79 @@
 body {
-	background-color: #fafafa;
+	background-color: #fdeac5;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	padding: 0 25px;
 
 	h1 {
 		color: #333;
+	}
+
+	h2 {
+		span {
+			display: none;
+		}
+	}
+
+	nav {
+		margin: 0 0 40px;
+		h3 {
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			li {
+				float: left;
+				margin-right: 15px;
+			}
+		}
+	}
+
+	main {
+		width: 70%;
+		clear: both;
+		.player {
+			width: 30%;
+			margin-right: 25px;
+			border: 1px solid #333;
+			&.one {
+				float: left;
+			}
+			&.two {
+				float: left;
+			}
+			.type {
+				background-color: #EE6C4E;
+				color: #fff;
+				padding: 8px 0 8px 5px;
+			}
+			.move {
+				margin-top: 20px;
+				padding: 5px;
+			}
+		}
+		.result {
+			clear: both;
+			margin-bottom: 50px;
+		}
+	}
+
+	aside {
+		float: right;
+		background-color: #fab591;
+		padding: 0 10px;
+
+		dt {
+				font-weight: bold;
+				margin-top: 5px;
+		}
+
+		dd {
+			border-bottom: 1px solid #f1f1f1;
+			padding: 7px 10px;
+			margin-left: 0;
+			font-size: 0.9em;
+		}
 	}
 }
