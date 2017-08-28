@@ -2,103 +2,131 @@ const DEBUG = true;
 
 class Game {
   constructor(mode) {
-    this.mode = mode;
+    this.mode = Number.parseInt(mode);
     this.choices = {
       a: 'none',
       b: 'none'
     };
   }
 
-  makeComputerMove() {
+  evaluateMoves() {
+    console.log(this.getWinner(this.choices));
+    this.end();
+  }
+
+  makeComputerMove(choice) {
+    if (DEBUG) {
+      console.log('makeComputerMove called with', choice);
+    }
     const move = Math.random().toFixed(2);
-    console.log('computer\'s move:');
+
     if(0 < move && move < 0.20) {
       if (DEBUG) {
-        console.log('rock');
+        console.log('Computer plays rock');
       }
 
-      this.choices.b = 'rock';
+      this.choices[choice] = 'rock';
     } else if (0.21 < move && move < 0.40) {
       if (DEBUG) {
-        console.log('paper');
+        console.log('Computer plays paper');
       }
 
-      this.choices.b = 'paper';
+      this.choices[choice] = 'paper';
     } else if (0.41 < move && move < 0.60) {
       if (DEBUG) {
-        console.log('scissors');
+        console.log('Computer plays scissors');
       }
 
-      this.choices.b = 'scissors';
+      this.choices[choice] = 'scissors';
     } else if (0.61 < move && move < 0.80) {
       if (DEBUG) {
-        console.log('lizard');
+        console.log('Computer plays lizard');
       }
 
-      this.choices.b = 'lizard';
+      this.choices[choice] = 'lizard';
     } else if (0.81 < move && move < 1) {
       if (DEBUG) {
-        console.log('spock');
+        console.log('Computer plays spock');
       }
 
-      this.choices.b = 'spock';
+      this.choices[choice] = 'spock';
     } else {
       return new Error('Invalid parameter');
     }
 
-    console.log(this.getWinner(this.choices));
+    if (this.choices.b !== 'none') {
+      this.evaluateMoves();
+    }
+  }
+
+  handlePlayerMove(e) {
+    switch(e.keyCode) {
+      case 82:
+        if (DEBUG) {
+          console.log('Human plays rock');
+        }
+
+        this.choices.a = 'rock';
+        break;
+      case 80:
+        if (DEBUG) {
+          console.log('Human plays paper');
+        }
+
+        this.choices.a = 'paper';
+        break;
+      case 83:
+        if (DEBUG) {
+          console.log('Human plays scissors');
+        }
+
+        this.choices.a = 'scissors';
+        break;
+      case 76:
+        if (DEBUG) {
+          console.log('Human plays lizard');
+        }
+
+        this.choices.a = 'lizard';
+        break;
+      case 86:
+        if (DEBUG) {
+          console.log('Human plays spock');
+        }
+
+        this.choices.a = 'spock';
+        break;
+      default:
+        return new Error('Invalid parameters');
+    }
+
+    this.makeComputerMove('b');
   }
 
   addPlayerControls() {
-    window.addEventListener('keyup', (e) => {
-      switch(e.keyCode) {
-        case 82:
-          if (DEBUG) {
-            console.log('Human plays rock');
-          }
-
-          this.choices.a = 'rock';
-          break;
-        case 80:
-          if (DEBUG) {
-            console.log('Human plays paper');
-          }
-
-          this.choices.a = 'paper';
-          break;
-        case 83:
-          if (DEBUG) {
-            console.log('Human plays scissors');
-          }
-
-          this.choices.a = 'scissors';
-          break;
-        case 76:
-          if (DEBUG) {
-            console.log('Human plays lizard');
-          }
-
-          this.choices.a = 'lizard';
-          break;
-        case 86:
-          if (DEBUG) {
-            console.log('Human plays spock');
-          }
-
-          this.choices.a = 'spock';
-          break;
-        default:
-          return new Error('Invalid parameters');
-      }
-
-      this.makeComputerMove();
+    const parent = this;
+    window.addEventListener('keyup', function handler(e) {
+      parent.handlePlayerMove(e);
+      this.removeEventListener('keyup', handler);
     });
   }
 
   start() {
-    console.log('started in mode', this.mode);
-    this.addPlayerControls();
-    // this.makeComputerMove();
+    if (DEBUG) {
+      console.log(`Game started in mode ${this.mode}\nChoices are ${JSON.stringify(this.choices)}`);
+    }
+
+    if (this.mode !== 2) {
+      this.addPlayerControls();
+    }
+
+    if (this.mode === 2) {
+      const parent = this;
+      this.makeComputerMove('a');
+      setTimeout(() => {
+        parent.makeComputerMove('b');
+    }, 100);
+    }
   }
 
   getWinner(choices) {
