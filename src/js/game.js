@@ -125,8 +125,11 @@ class Game {
       this.makeComputerMove('a');
       setTimeout(() => {
         parent.makeComputerMove('b');
-    }, 100);
+      }, 100);
     }
+
+    document.querySelectorAll('h2 span')[1].style.display = 'none';
+    document.querySelectorAll('h2 span')[0].style.display = 'inline';
   }
 
   getWinner(choices) {
@@ -209,6 +212,8 @@ class Game {
   }
 
   end() {
+    document.querySelectorAll('h2 span')[0].style.display = 'none';
+    document.querySelectorAll('h2 span')[1].style.display = 'inline';
     console.log('Thanks for playing.');
     // reset choices
   }
