@@ -7,10 +7,18 @@ class Game {
       a: 'none',
       b: 'none'
     };
+    document.querySelectorAll('.one .move span')[0].innerText = '';
+    document.querySelectorAll('.two .move span')[0].innerText = '';
+    document.querySelectorAll('.result span')[0].innerText = '';
   }
 
   evaluateMoves() {
-    console.log(this.getWinner(this.choices));
+    const outcome = this.getWinner(this.choices);
+    if (DEBUG) {
+      console.log(`Outcome: ${outcome}`);
+    }
+
+    document.querySelectorAll('.result span')[0].innerText = `${outcome[1]}: ${outcome[0]} wins!`;
     this.end();
   }
 
@@ -52,6 +60,12 @@ class Game {
       this.choices[choice] = 'spock';
     } else {
       return new Error('Invalid parameter');
+    }
+
+    if (choice === 'a') {
+      document.querySelectorAll('.one .move span')[0].innerText = this.choices.a;
+    } else {
+      document.querySelectorAll('.two .move span')[0].innerText = this.choices.b;
     }
 
     if (this.choices.b !== 'none') {
@@ -99,6 +113,7 @@ class Game {
       default:
         return new Error('Invalid parameters');
     }
+    document.querySelectorAll('.one .move span')[0].innerText = this.choices.a;
 
     this.makeComputerMove('b');
   }
@@ -112,20 +127,38 @@ class Game {
   }
 
   start() {
+    let player1Type = document.querySelectorAll('.one .type span')[0];
+    let player2Type = document.querySelectorAll('.two .type span')[0];
+
     if (DEBUG) {
       console.log(`Game started in mode ${this.mode}\nChoices are ${JSON.stringify(this.choices)}`);
     }
 
-    if (this.mode !== 2) {
-      this.addPlayerControls();
-    }
-
-    if (this.mode === 2) {
-      const parent = this;
-      this.makeComputerMove('a');
-      setTimeout(() => {
-        parent.makeComputerMove('b');
-      }, 100);
+    switch(this.mode) {
+      case 1: {
+        player1Type.innerText = 'Human';
+        player2Type.innerText = 'Computer';
+        this.addPlayerControls();
+        break;
+      }
+      case 2: {
+        player1Type.innerText = 'Computer';
+        player2Type.innerText = 'Computer';
+        const parent = this;
+        this.makeComputerMove('a');
+        setTimeout(() => {
+          parent.makeComputerMove('b');
+        }, 100);
+        break;
+      }
+      case 3: {
+        player1Type.innerText = 'Human';
+        player2Type.innerText = 'Human';
+        this.addPlayerControls();
+        break;
+      }
+      default:
+        return new Error('Invalid parameter');
     }
 
     document.querySelectorAll('h2 span')[1].style.display = 'none';
@@ -136,75 +169,75 @@ class Game {
     if (choices.a === 'rock'){
       switch(choices.b) {
         case 'rock':
-          return ['tie', 'No winner'];
+          return ['No one', 'It\'s a tie'];
         case 'paper':
-          return ['player b', 'Paper covers rock'];
+          return ['Player 2', 'Paper covers rock'];
         case 'scissors':
-          return ['player a', 'Rock crushes scissors'];
+          return ['Player 1', 'Rock crushes scissors'];
         case 'lizard':
-          return ['player a', 'Rock crushes lizard'];
+          return ['Player 1', 'Rock crushes lizard'];
         case 'spock':
-          return ['player b', 'Spock vaporizes rock'];
+          return ['Player 2', 'Spock vaporizes rock'];
         default:
           return new Error('Invalid choice');
       }
     } else if (choices.a === 'paper'){
       switch(choices.b) {
         case 'rock':
-          return ['player a', 'Paper covers rock'];
+          return ['Player 1', 'Paper covers rock'];
         case 'paper':
-          return ['tie', 'No winner'];
+          return ['No one', 'It\'s a tie'];
         case 'scissors':
-          return ['player b', 'Scissors cuts paper'];
+          return ['Player 2', 'Scissors cuts paper'];
         case 'lizard':
-          return ['player b', 'Lizard eats paper'];
+          return ['Player 2', 'Lizard eats paper'];
         case 'spock':
-          return ['player a', 'Paper disproves spock'];
+          return ['Player 1', 'Paper disproves spock'];
         default:
           return new Error('Invalid choice');
       }
     } else if (choices.a === 'scissors'){
       switch(choices.b) {
         case 'rock':
-          return ['player b', 'Rock crushes scissors'];
+          return ['Player 2', 'Rock crushes scissors'];
         case 'paper':
-          return ['player a', 'Scissors cuts paper'];
+          return ['Player 1', 'Scissors cuts paper'];
         case 'scissors':
-          return ['tie', 'No winner'];
+          return ['No one', 'It\'s a tie'];
         case 'lizard':
-          return ['player a', 'Scissors decapitates lizard'];
+          return ['Player 1', 'Scissors decapitates lizard'];
         case 'spock':
-          return ['player b', 'Spock smashes scissors'];
+          return ['Player 2', 'Spock smashes scissors'];
         default:
           return new Error('Invalid choice');
       }
     } else if (choices.a === 'lizard'){
       switch(choices.b) {
         case 'rock':
-          return ['player b', 'Rock crushes lizard'];
+          return ['Player 2', 'Rock crushes lizard'];
         case 'paper':
-          return ['player a', 'Lizard eats paper'];
+          return ['Player 1', 'Lizard eats paper'];
         case 'scissors':
-          return ['player b', 'Scissors decapitates lizard'];
+          return ['Player 2', 'Scissors decapitates lizard'];
         case 'lizard':
-          return ['tie', 'No winner'];
+          return ['No one', 'It\'s a tie'];
         case 'spock':
-          return ['player a', 'Lizard poisons spock'];
+          return ['Player 1', 'Lizard poisons spock'];
         default:
           return new Error('Invalid choice');
       }
     } else if (choices.a === 'spock'){
       switch(choices.b) {
         case 'rock':
-          return ['player a', 'Spock vaporizes rock'];
+          return ['Player 1', 'Spock vaporizes rock'];
         case 'paper':
-          return ['player b', 'Paper disproves spock'];
+          return ['Player 2', 'Paper disproves spock'];
         case 'scissors':
-          return ['player a', 'Spock smashes scissors'];
+          return ['Player 1', 'Spock smashes scissors'];
         case 'lizard':
-          return ['player b', 'Lizard poisons spock'];
+          return ['Player 2', 'Lizard poisons spock'];
         case 'spock':
-          return ['tie', 'No winner'];
+          return ['No one', 'It\'s a tie'];
         default:
           return new Error('Invalid choice');
       }
@@ -214,8 +247,10 @@ class Game {
   end() {
     document.querySelectorAll('h2 span')[0].style.display = 'none';
     document.querySelectorAll('h2 span')[1].style.display = 'inline';
-    console.log('Thanks for playing.');
-    // reset choices
+
+    if (DEBUG) {
+      console.log('Game Over: Thanks for playing.');
+    }
   }
 }
 
