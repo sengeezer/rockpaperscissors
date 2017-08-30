@@ -15,7 +15,7 @@ class Game {
   evaluateMoves() {
     const outcome = this.getWinner(this.choices);
     if (DEBUG) {
-      console.log(`Outcome: ${outcome}`);
+      console.log(`Outcome (winner,reason): ${outcome}`);
     }
 
     document.querySelectorAll('.result span')[0].innerText = `${outcome[1]}: ${outcome[0]} wins!`;
@@ -70,6 +70,8 @@ class Game {
 
     if (this.choices.b !== 'none') {
       this.evaluateMoves();
+    } else if (DEBUG) {
+      console.log(`this.choices.b is ${this.choices.b}`);
     }
   }
 
@@ -152,9 +154,12 @@ class Game {
         break;
       }
       case 3: {
+        /* TODO; Implement
         player1Type.innerText = 'Human';
         player2Type.innerText = 'Human';
         this.addPlayerControls();
+        */
+        alert('This feature has not yet been implemented.');
         break;
       }
       default:

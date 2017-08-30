@@ -1,5 +1,12 @@
 # Gumtree UK frontend developer test
 
+## Issues / caveats
+
+* Human versus human as mode to extend to
+* Bug: Computer vs computer does not always work when following human vs computer game
+
+----------------------------------------------------------------------
+
 ## User Story
 
 Create a browser based version of the game ‘Rock, Paper, Scissors’.
