@@ -3,7 +3,6 @@
 ## Issues / caveats
 
 * Human versus human as mode to extend to
-* Bug: Computer vs computer does not always work when following human vs computer game
 
 ----------------------------------------------------------------------
 

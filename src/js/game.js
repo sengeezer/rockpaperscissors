@@ -28,38 +28,38 @@ class Game {
     }
     const move = Math.random().toFixed(2);
 
-    if(0 < move && move < 0.20) {
+    if(0.00 <= move && move <= 0.20) {
       if (DEBUG) {
         console.log('Computer plays rock');
       }
 
       this.choices[choice] = 'rock';
-    } else if (0.21 < move && move < 0.40) {
+    } else if (0.21 <= move && move <= 0.40) {
       if (DEBUG) {
         console.log('Computer plays paper');
       }
 
       this.choices[choice] = 'paper';
-    } else if (0.41 < move && move < 0.60) {
+    } else if (0.41 <= move && move <= 0.60) {
       if (DEBUG) {
         console.log('Computer plays scissors');
       }
 
       this.choices[choice] = 'scissors';
-    } else if (0.61 < move && move < 0.80) {
+    } else if (0.61 <= move && move <= 0.80) {
       if (DEBUG) {
         console.log('Computer plays lizard');
       }
 
       this.choices[choice] = 'lizard';
-    } else if (0.81 < move && move < 1) {
+    } else if (0.81 <= move && move <= 1) {
       if (DEBUG) {
         console.log('Computer plays spock');
       }
 
       this.choices[choice] = 'spock';
     } else {
-      return new Error('Invalid parameter');
+      throw new Error(`Invalid parameter: ${move}`);
     }
 
     if (choice === 'a') {
@@ -70,8 +70,6 @@ class Game {
 
     if (this.choices.b !== 'none') {
       this.evaluateMoves();
-    } else if (DEBUG) {
-      console.log(`this.choices.b is ${this.choices.b}`);
     }
   }
 
@@ -113,7 +111,7 @@ class Game {
         this.choices.a = 'spock';
         break;
       default:
-        return new Error('Invalid parameters');
+        throw new Error('Invalid parameters');
     }
     document.querySelectorAll('.one .move span')[0].innerText = this.choices.a;
 
@@ -163,7 +161,7 @@ class Game {
         break;
       }
       default:
-        return new Error('Invalid parameter');
+        throw new Error('Invalid parameter');
     }
 
     document.querySelectorAll('h2 span')[1].style.display = 'none';
@@ -184,7 +182,7 @@ class Game {
         case 'spock':
           return ['Player 2', 'Spock vaporizes rock'];
         default:
-          return new Error('Invalid choice');
+          throw new Error('Invalid choice');
       }
     } else if (choices.a === 'paper'){
       switch(choices.b) {
@@ -199,7 +197,7 @@ class Game {
         case 'spock':
           return ['Player 1', 'Paper disproves spock'];
         default:
-          return new Error('Invalid choice');
+          throw new Error('Invalid choice');
       }
     } else if (choices.a === 'scissors'){
       switch(choices.b) {
@@ -214,7 +212,7 @@ class Game {
         case 'spock':
           return ['Player 2', 'Spock smashes scissors'];
         default:
-          return new Error('Invalid choice');
+          throw new Error('Invalid choice');
       }
     } else if (choices.a === 'lizard'){
       switch(choices.b) {
@@ -229,7 +227,7 @@ class Game {
         case 'spock':
           return ['Player 1', 'Lizard poisons spock'];
         default:
-          return new Error('Invalid choice');
+          throw new Error('Invalid choice');
       }
     } else if (choices.a === 'spock'){
       switch(choices.b) {
@@ -244,7 +242,7 @@ class Game {
         case 'spock':
           return ['No one', 'It\'s a tie'];
         default:
-          return new Error('Invalid choice');
+          throw new Error('Invalid choice');
       }
     }
   }
