@@ -9,7 +9,7 @@ class Player {
     } else if (this.type === 'machine') {
 
     } else {
-      throw new Error('No player type specified');
+      throw new Error(`Invalid parameter: ${this.type}`);
     }
   }
 }

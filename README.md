@@ -1,8 +1,10 @@
 # Gumtree UK frontend developer test
 
-## Issues / caveats
+## Caveats and ideas for future iterations
 
 * Human versus human as mode to extend to
+* Refactor code to develop Player class stub
+* TODO: Convert debug mode into unit tests ;)
 
 ----------------------------------------------------------------------
 

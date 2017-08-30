@@ -111,7 +111,7 @@ class Game {
         this.choices.a = 'spock';
         break;
       default:
-        throw new Error('Invalid parameters');
+        throw new Error(`Invalid parameter: ${e.keyCode}`);
     }
     document.querySelectorAll('.one .move span')[0].innerText = this.choices.a;
 
@@ -161,7 +161,7 @@ class Game {
         break;
       }
       default:
-        throw new Error('Invalid parameter');
+        throw new Error(`Invalid parameter: ${this.mode}`);
     }
 
     document.querySelectorAll('h2 span')[1].style.display = 'none';
@@ -182,7 +182,7 @@ class Game {
         case 'spock':
           return ['Player 2', 'Spock vaporizes rock'];
         default:
-          throw new Error('Invalid choice');
+          throw new Error(`Invalid parameter: ${this.choices.b}`);
       }
     } else if (choices.a === 'paper'){
       switch(choices.b) {
@@ -197,7 +197,7 @@ class Game {
         case 'spock':
           return ['Player 1', 'Paper disproves spock'];
         default:
-          throw new Error('Invalid choice');
+          throw new Error(`Invalid parameter: ${this.choices.b}`);
       }
     } else if (choices.a === 'scissors'){
       switch(choices.b) {
@@ -212,7 +212,7 @@ class Game {
         case 'spock':
           return ['Player 2', 'Spock smashes scissors'];
         default:
-          throw new Error('Invalid choice');
+          throw new Error(`Invalid parameter: ${this.choices.b}`);
       }
     } else if (choices.a === 'lizard'){
       switch(choices.b) {
@@ -227,7 +227,7 @@ class Game {
         case 'spock':
           return ['Player 1', 'Lizard poisons spock'];
         default:
-          throw new Error('Invalid choice');
+          throw new Error(`Invalid parameter: ${this.choices.b}`);
       }
     } else if (choices.a === 'spock'){
       switch(choices.b) {
@@ -242,7 +242,7 @@ class Game {
         case 'spock':
           return ['No one', 'It\'s a tie'];
         default:
-          throw new Error('Invalid choice');
+          throw new Error(`Invalid parameter: ${this.choices.b}`);
       }
     }
   }
